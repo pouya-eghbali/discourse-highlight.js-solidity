@@ -1,3 +1,75 @@
 <script type="text/discourse-plugin" version="0.8.27">
-api.registerHighlightJSLanguage("solidity", function(e){function a(e,a){return{b:"(?<![A-Za-z0-9_$])"+e+"\\.\\s*",e:/[^A-Za-z0-9$_\.]/,eB:!1,eE:!0,l:z,k:{built_in:e+" "+a},c:[v],r:10}}for(var t=[],r=0;32>r;r++)t[r]=r+1;var s=t.map(function(e){return 8*e}),i=[];for(r=0;80>=r;r++)i[r]=r;var l=t.map(function(e){return"bytes"+e}),n=l.join(" ")+" ",c=s.map(function(e){return"uint"+e}),o=c.join(" ")+" ",d=s.map(function(e){return"int"+e}),u=d.join(" ")+" ",p=[].concat.apply([],s.map(function(e){return i.map(function(a){return e+"x"+a})})),m=p.map(function(e){return"fixed"+e}),b=m.join(" ")+" ",f=p.map(function(e){return"ufixed"+e}),C=f.join(" ")+" ",g={keyword:"var bool string int uint "+u+o+"byte bytes "+n+"fixed ufixed "+b+C+"enum struct mapping address new delete if else for while continue break return throw emit _ function modifier event constructor constant anonymous indexed storage memory calldata external public internal payable pure view private returns import using pragma contract interface library assembly",literal:"true false wei szabo finney ether seconds minutes hours days weeks years",built_in:"self this super selfdestruct suicide now msg block tx abi type blockhash gasleft assert revert require sha3 sha256 keccak256 ripemd160 ecrecover addmod mulmod log0 log1 log2 log3 log4send transfer call callcode delegatecall staticcall "},M={keyword:"assembly let if switch case default for jump jumpi stop return revert selfdestruct invalid",built_in:"add sub mul div sdiv mod smod exp not lt gt slt sgt eq iszero and or xor byte shl shr sar addmod mulmod signextend keccak256 pc pop dup1 dup2 dup3 dup4 dup5 dup6 dup7 dup8 dup9 dup10 dup11 dup12 dup13 dup14 dup15 dup16 swap1 swap2 swap3 swap4 swap5 swap6 swap7 swap8 swap9 swap10 swap11 swap12 swap13 swap14 swap15 swap16 mload mstore mstore8 sload sstore msize gas address balance caller callvalue calldataload calldatasize calldatacopy codesize codecopy extcodesize extcodecopy returndatasize returndatacopy extcodehash create create2 call callcode delegatecall staticcall log0 log1 log2 log3 log4 origin gasprice blockhash coinbase timestamp number difficulty gaslimit"},y={b:/_/,e:/[^A-Za-z0-9$.]/,eB:!0,eE:!0,k:{built_in:"slot offset"},r:2},h=/-?((?<![A-Za-z0-9_$])0[xX]([a-fA-F0-9]_?)*[a-fA-F0-9]|((?<![A-Za-z0-9_$])[1-9](_?\d)*(\.((\d_?)*\d)?)?|\.\d(_?\d)*)([eE][-+]?\d(_?\d)*)?|(?<![A-Za-z0-9_$])0)/,k={cN:"number",b:h,r:0},w={cN:"params",b:/\(/,e:/\)/,eB:!0,eE:!0,k:g,c:[e.CLCM,e.CBCM,e.ASM,e.QSM,k,"self"]},_={cN:"string",b:/hex'[0-9a-fA-F]*'/},A={cN:"string",b:/hex"[0-9a-fA-F]*"/},z=/[A-Za-z_$][A-Za-z_$0-9]*|\*/,x=/[A-Za-z_$][A-Za-z_$0-9.]*/,v={b:/\.\s*/,e:/[^A-Za-z0-9$_\.]/,eB:!0,eE:!0,k:{built_in:"gas value selector send transfer call callcode delegatecall staticcall balance length push pop name creationCode runtimeCode"},r:2},B=e.inherit(e.TM,{b:/[A-Za-z$_][0-9A-Za-z$_]*/,l:z,k:g});return{aliases:["sol"],k:g,l:z,c:[e.ASM,e.QSM,_,A,e.CLCM,e.CBCM,k,{cN:"function",l:z,bK:"function modifier event constructor",e:/[{;]/,eE:!0,c:[B,w,e.CLCM,e.CBCM],i:/%/},a("msg","gas value data sender sig"),a("block","blockhash coinbase difficulty gaslimit number timestamp "),a("tx","gasprice origin"),a("abi","decode encode encodePacked encodeWithSelector encodeWithSignature"),v,{cN:"class",l:z,bK:"contract interface library",e:"{",eE:!0,i:/[:"\[\]]/,c:[{bK:"is",l:z},B,w,e.CLCM,e.CBCM]},{l:z,bK:"struct enum",e:"{",eE:!0,i:/[:"\[\]]/,c:[B,e.CLCM,e.CBCM]},{bK:"import",e:";",l:z,k:"import * from as",c:[B,e.ASM,e.QSM,_,A,e.CLCM,e.CBCM]},{bK:"using",e:";",l:z,k:"using * for",c:[B,e.CLCM,e.CBCM]},{bK:"pragma",e:";",l:z,k:{keyword:"pragma solidity experimental",built_in:"ABIEncoderV2 SMTChecker"},c:[e.CLCM,e.CBCM]},{bK:"assembly",e:/\b\B/,c:[e.CLCM,e.CBCM,{b:"{",e:"}",endsParent:!0,k:M,l:x,c:[e.ASM,e.QSM,_,A,e.CLCM,e.CBCM,k,y,{b:"{",e:"}",k:M,l:x,c:[e.ASM,e.QSM,_,A,e.CLCM,e.CBCM,k,y,"self"]}]}]}],i:/#/}});
+api.registerHighlightJSLanguage("solidity", (()=>{"use strict";function e(){try{return!0
+}catch(e){return!1}}
+var a=/-?(\b0[xX]([a-fA-F0-9]_?)*[a-fA-F0-9]|(\b[1-9](_?\d)*(\.((\d_?)*\d)?)?|\.\d(_?\d)*)([eE][-+]?\d(_?\d)*)?|\b0)(?!\w|\$)/
+;e()&&(a=a.source.replace(/\\b/g,"(?<!\\$)\\b"));var s={className:"number",
+begin:a,relevance:0},n={
+keyword:"assembly let function if switch case default for leave break continue u256 jump jumpi stop return revert selfdestruct invalid",
+built_in:"add sub mul div sdiv mod smod exp not lt gt slt sgt eq iszero and or xor byte shl shr sar addmod mulmod signextend keccak256 pc pop dup1 dup2 dup3 dup4 dup5 dup6 dup7 dup8 dup9 dup10 dup11 dup12 dup13 dup14 dup15 dup16 swap1 swap2 swap3 swap4 swap5 swap6 swap7 swap8 swap9 swap10 swap11 swap12 swap13 swap14 swap15 swap16 mload mstore mstore8 sload sstore msize gas address balance selfbalance caller callvalue calldataload calldatasize calldatacopy codesize codecopy extcodesize extcodecopy returndatasize returndatacopy extcodehash create create2 call callcode delegatecall staticcall log0 log1 log2 log3 log4 chainid origin gasprice basefee blockhash coinbase timestamp number difficulty prevrandao gaslimit",
+literal:"true false"},i={className:"string",
+begin:/\bhex'(([0-9a-fA-F]{2}_?)*[0-9a-fA-F]{2})?'/},t={className:"string",
+begin:/\bhex"(([0-9a-fA-F]{2}_?)*[0-9a-fA-F]{2})?"/};function r(e){
+return e.inherit(e.APOS_STRING_MODE,{begin:/(\bunicode)?'/})}function l(e){
+return e.inherit(e.QUOTE_STRING_MODE,{begin:/(\bunicode)?"/})}var o={
+SOL_ASSEMBLY_KEYWORDS:n,baseAssembly:e=>{
+var a=r(e),o=l(e),c=/[A-Za-z_$][A-Za-z_$0-9.]*/,d=e.inherit(e.TITLE_MODE,{
+begin:/[A-Za-z$_][0-9A-Za-z$_]*/,lexemes:c,keywords:n}),u={className:"params",
+begin:/\(/,end:/\)/,excludeBegin:!0,excludeEnd:!0,lexemes:c,keywords:n,
+contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,a,o,s]},_={
+className:"operator",begin:/:=|->/};return{keywords:n,lexemes:c,
+contains:[a,o,i,t,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,s,_,{
+className:"function",lexemes:c,beginKeywords:"function",end:"{",excludeEnd:!0,
+contains:[d,u,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,_]}]}},
+solAposStringMode:r,solQuoteStringMode:l,HEX_APOS_STRING_MODE:i,
+HEX_QUOTE_STRING_MODE:t,SOL_NUMBER:s,isNegativeLookbehindAvailable:e}
+;const{baseAssembly:c,solAposStringMode:d,solQuoteStringMode:u,HEX_APOS_STRING_MODE:_,HEX_QUOTE_STRING_MODE:m,SOL_NUMBER:b,isNegativeLookbehindAvailable:g}=o
+;return e=>{for(var a=d(e),s=u(e),n=[],i=0;i<32;i++)n[i]=i+1
+;var t=n.map((e=>8*e)),r=[];for(i=0;i<=80;i++)r[i]=i
+;var l=n.map((e=>"bytes"+e)).join(" ")+" ",o=t.map((e=>"uint"+e)).join(" ")+" ",E=t.map((e=>"int"+e)).join(" ")+" ",M=[].concat.apply([],t.map((e=>r.map((a=>e+"x"+a))))),p={
+keyword:"var bool string int uint "+E+o+"byte bytes "+l+"fixed ufixed "+M.map((e=>"fixed"+e)).join(" ")+" "+M.map((e=>"ufixed"+e)).join(" ")+" enum struct mapping address new delete if else for while continue break return throw emit try catch revert unchecked _ function modifier event constructor fallback receive error virtual override constant immutable anonymous indexed storage memory calldata external public internal payable pure view private returns import from as using global pragma contract interface library is abstract type assembly",
+literal:"true false wei gwei szabo finney ether seconds minutes hours days weeks years",
+built_in:"self this super selfdestruct suicide now msg block tx abi blockhash gasleft assert require Error Panic sha3 sha256 keccak256 ripemd160 ecrecover addmod mulmod log0 log1 log2 log3 log4"
+},O={className:"operator",begin:/[+\-!~*\/%<>&^|=]/
+},C=/[A-Za-z_$][A-Za-z_$0-9]*/,N={className:"params",begin:/\(/,end:/\)/,
+excludeBegin:!0,excludeEnd:!0,lexemes:C,keywords:p,
+contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,a,s,b,"self"]},f={
+begin:/\.\s*/,end:/[^A-Za-z0-9$_\.]/,excludeBegin:!0,excludeEnd:!0,keywords:{
+built_in:"gas value selector address length push pop send transfer call callcode delegatecall staticcall balance code codehash wrap unwrap name creationCode runtimeCode interfaceId min max"
+},relevance:2},y=e.inherit(e.TITLE_MODE,{begin:/[A-Za-z$_][0-9A-Za-z$_]*/,
+lexemes:C,keywords:p}),w={className:"built_in",
+begin:(g()?"(?<!\\$)\\b":"\\b")+"(gas|value|salt)(?=:)"};function x(e,a){return{
+begin:(g()?"(?<!\\$)\\b":"\\b")+e+"\\.\\s*",end:/[^A-Za-z0-9$_\.]/,
+excludeBegin:!1,excludeEnd:!0,lexemes:C,keywords:{built_in:e+" "+a},
+contains:[f],relevance:10}}var h=c(e),v=e.inherit(h,{
+contains:h.contains.concat([{begin:/\./,end:/[^A-Za-z0-9$.]/,excludeBegin:!0,
+excludeEnd:!0,keywords:{built_in:"slot offset length address selector"},
+relevance:2},{begin:/_/,end:/[^A-Za-z0-9$.]/,excludeBegin:!0,excludeEnd:!0,
+keywords:{built_in:"slot offset"},relevance:2}])});return{aliases:["sol"],
+keywords:p,lexemes:C,
+contains:[a,s,_,m,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,b,w,O,{
+className:"function",lexemes:C,
+beginKeywords:"function modifier event constructor fallback receive error",
+end:/[{;]/,excludeEnd:!0,
+contains:[y,N,w,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE],illegal:/%/
+},x("msg","gas value data sender sig"),x("block","blockhash coinbase difficulty prevrandao gaslimit basefee number timestamp chainid"),x("tx","gasprice origin"),x("abi","decode encode encodePacked encodeWithSelector encodeWithSignature encodeCall"),x("bytes","concat"),x("string","concat"),f,{
+className:"class",lexemes:C,beginKeywords:"contract interface library",end:"{",
+excludeEnd:!0,illegal:/[:"\[\]]/,contains:[{beginKeywords:"is",lexemes:C
+},y,N,w,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE]},{lexemes:C,
+beginKeywords:"struct enum",end:"{",excludeEnd:!0,illegal:/[:"\[\]]/,
+contains:[y,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE]},{
+beginKeywords:"import",end:";",lexemes:C,keywords:"import from as",
+contains:[y,a,s,_,m,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,O]},{
+beginKeywords:"using",end:";",lexemes:C,keywords:"using for global",
+contains:[y,e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,O]},{className:"meta",
+beginKeywords:"pragma",end:";",lexemes:C,keywords:{
+keyword:"pragma solidity experimental abicoder",
+built_in:"ABIEncoderV2 SMTChecker v1 v2"},
+contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,e.inherit(a,{
+className:"meta-string"}),e.inherit(s,{className:"meta-string"})]},{
+beginKeywords:"assembly",end:/\b\B/,
+contains:[e.C_LINE_COMMENT_MODE,e.C_BLOCK_COMMENT_MODE,e.inherit(a,{
+className:"meta-string"}),e.inherit(s,{className:"meta-string"}),e.inherit(v,{
+begin:"{",end:"}",endsParent:!0,contains:v.contains.concat([e.inherit(v,{
+begin:"{",end:"}",contains:v.contains.concat(["self"])})])})]}],illegal:/#/}}
+})());
 </script>
